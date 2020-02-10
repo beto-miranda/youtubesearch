@@ -1,0 +1,34 @@
+<h1 id="tableLabel">Channels</h1>
+
+<p *ngIf="!channels"><em>Loading...</em></p>
+
+<div>
+  <label>Search: </label>
+  <input class="form-control" [(ngModel)]="searchTerm" type="text" name="searchTerm" id="searchTerm" (ngModelChange)="this.searchTermUpdate.next($event)"/>
+</div>
+
+<div>
+  <label>From cache: </label>
+  <input class="form-control" [(ngModel)]="fromCache" type="checkbox" name="fromCache" id="fromCache "/>
+</div>
+
+<table class='table table-striped' aria-labelledby="tableLabel" *ngIf="channels">
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Description</th>
+      <th>Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let channel of channels">
+      <td>{{ channel.title }}</td>
+      <td>{{ channel.description }}</td>
+      <td>
+        <a [routerLink]="['/channels', channel.id]">
+          Details
+        </a>
+      </td>
+    </tr>
+  </tbody>
+</table>

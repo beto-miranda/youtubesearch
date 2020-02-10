@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="9.0.0" />
+    <PackageReference Include="FluentValidation" Version="8.6.1" />
+    <PackageReference Include="Google.Apis.YouTube.v3" Version="1.43.0.1834" />
+    <PackageReference Include="MediatR" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="3.1.1" />
+    <PackageReference Include="System.Text.Json" Version="4.7.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\YoutubeSearch.Domain\YoutubeSearch.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

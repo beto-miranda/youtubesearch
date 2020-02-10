@@ -1,0 +1,24 @@
+<p *ngIf="channel">{{ channel.title }}</p>
+<table class='table table-striped' aria-labelledby="tableLabel" *ngIf="channel">
+  <tbody>
+    <tr>
+      <td>Description</td>
+      <td>{{ channel.description }}</td>
+    </tr>
+    <tr>
+      <td>Comment Count</td>
+      <td>{{ channel.commentCount }}</td>
+    </tr>
+    <tr>
+      <td>Subscriber Count</td>
+      <td>{{ channel.subscriberCount }}</td>
+    </tr>
+    <tr>
+      <td>Video Count</td>
+      <td>{{ channel.videoCount }}</td>
+    </tr>
+  </tbody>
+</table>
+<a [routerLink]="['/channels']">
+  Back
+</a>
