@@ -60,7 +60,7 @@ namespace YoutubeSearch.Web
 
             services.AddIdentityServer()
                 .AddApiAuthorization<ApplicationUser, IdentityDbContext>()
-                .AddDeveloperSigningCredential(true);
+                .AddDeveloperSigningCredential(false);
 
             services.AddAuthentication()
                 .AddIdentityServerJwt();
