@@ -59,7 +59,8 @@ namespace YoutubeSearch.Web
                 .AddEntityFrameworkStores<IdentityDbContext>();
 
             services.AddIdentityServer()
-                .AddApiAuthorization<ApplicationUser, IdentityDbContext>();
+                .AddApiAuthorization<ApplicationUser, IdentityDbContext>()
+                .AddDeveloperSigningCredential(true);
 
             services.AddAuthentication()
                 .AddIdentityServerJwt();
