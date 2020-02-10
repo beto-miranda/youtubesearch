@@ -1,0 +1,82 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- master
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+stages:
+- stage: 'Build'
+  variables:
+    solution: '**/*.sln'
+    buildPlatform: 'Any CPU'
+    buildConfiguration: 'Release'
+  displayName: 'Build'
+  jobs:
+  - job: 'Build'
+    displayName: 'Build'
+    pool:  
+      vmImage: 'windows-latest' 
+    steps:
+    - task: NuGetToolInstaller@1
+
+    - task: NuGetCommand@2
+      inputs:
+        restoreSolution: '$(solution)'
+
+    - task: VSBuild@1
+      inputs:
+        solution: '$(solution)'
+        msbuildArgs: '/p:SkipInvalidConfigurations=true /p:DeployOnBuild=true /p:WebPublishMethod=FileSystem /p:publishUrl="$(build.artifactstagingdirectory)\\" /p:DeployDefaultTarget=WebPublish'
+        platform: '$(buildPlatform)'
+        configuration: '$(buildConfiguration)'
+
+    - task: VSTest@2
+      inputs:
+        platform: '$(buildPlatform)'
+        configuration: '$(buildConfiguration)'
+
+    - task: PublishBuildArtifacts@1
+      inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+        ArtifactName: 'drop'
+        publishLocation: 'Container'
+
+- stage: 'Deploy'
+  displayName: 'Deploy'
+  jobs:
+  - deployment: DeployToAws
+    displayName: 'Deploy To AWS Elastic Beanstalk'
+    pool:
+      vmImage: 'windows-latest'
+    variables:
+      DefaultConnection: 'server=mysql-one.ceody5tcdclz.us-east-2.rds.amazonaws.com;userid=admin;pwd=n7RRVA8UymzJ1B5Iyzfg;port=3306;database=YoutubeSearchDatabase;sslmode=none;'
+      YoutubeApiKey: 'AIzaSyCxLFcwNPY8neZOElWMfHpxQkDqt1IGVog'
+    environment: 'Production'
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - download: current
+            artifact: drop
+          - task: replacetokens@3
+            displayName: 'Replace Tokens'
+            inputs:
+              rootDirectory: '$(Pipeline.Workspace)/drop'
+              targetFiles: '**/*.json'
+              tokenPrefix: '__'
+              tokenSuffix: '__'
+
+          - task: BeanstalkDeployApplication@1
+            displayName: 'Deploy to Elastic Beanstalk'
+            inputs:
+              awsCredentials: 'AWS Beanstalk Deployment'
+              regionName: 'us-east-2'
+              applicationName: YoutubeSearch
+              environmentName: 'Youtubesearch-env'
+              applicationType: aspnetCoreWindows
+              dotnetPublishPath: '$(Pipeline.Workspace)/drop'
