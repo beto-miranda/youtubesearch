@@ -20,6 +20,7 @@ using YoutubeSearch.Persistence;
 using YoutubeSearch.Application.Integrations.Youtube;
 using YoutubeSearch.Web.HostedServices;
 using YoutubeSearch.Application.Infrastructure.BackgroundTasks;
+using YoutubeSearch.Web.Certificate;
 
 namespace YoutubeSearch.Web
 {
@@ -60,7 +61,7 @@ namespace YoutubeSearch.Web
 
             services.AddIdentityServer()
                 .AddApiAuthorization<ApplicationUser, IdentityDbContext>()
-                .AddDeveloperSigningCredential(false);
+                .AddSigningCredential(CertificateHelper.Get());
 
             services.AddAuthentication()
                 .AddIdentityServerJwt();

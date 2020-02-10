@@ -36,6 +36,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="Certificate\SigningKey.pfx" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Update="app.db" CopyToOutputDirectory="PreserveNewest" ExcludeFromSingleFile="true" />
   </ItemGroup>
   <ItemGroup>
