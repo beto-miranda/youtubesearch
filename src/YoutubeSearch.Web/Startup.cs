@@ -51,20 +51,6 @@ namespace YoutubeSearch.Web
                 options.UseMySql(
                     Configuration.GetConnectionString("DefaultConnection"), b => b.MigrationsAssembly("YoutubeSearch.Web")));
 
-            services.AddDbContext<IdentityDbContext>(options =>
-                options.UseMySql(
-                    Configuration.GetConnectionString("DefaultConnection")));
-
-            services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddEntityFrameworkStores<IdentityDbContext>();
-
-            services.AddIdentityServer()
-                .AddApiAuthorization<ApplicationUser, IdentityDbContext>();
-                //.AddSigningCredential(CertificateHelper.Get());
-
-            services.AddAuthentication()
-                .AddIdentityServerJwt();
-
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Sikur Admin API", Version = "v1" });
@@ -105,10 +91,6 @@ namespace YoutubeSearch.Web
             }
 
             app.UseRouting();
-
-            app.UseAuthentication();
-            app.UseIdentityServer();
-            app.UseAuthorization();
 
             app.UseSwagger();
             app.UseSwaggerUI(c =>

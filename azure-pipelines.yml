@@ -73,7 +73,7 @@ stages:
             inputs:
               awsCredentials: 'AWS Beanstalk Deployment'
               regionName: 'us-east-2'
-              applicationName: YoutubeSearch
-              environmentName: 'Youtubesearch-env'
+              applicationName: YoutubeSearch2
+              environmentName: 'Youtubesearch2-env'
               applicationType: aspnetCoreWindows
               dotnetPublishPath: '$(Pipeline.Workspace)/drop'
