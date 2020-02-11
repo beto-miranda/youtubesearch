@@ -20,7 +20,6 @@ using YoutubeSearch.Persistence;
 using YoutubeSearch.Application.Integrations.Youtube;
 using YoutubeSearch.Web.HostedServices;
 using YoutubeSearch.Application.Infrastructure.BackgroundTasks;
-using YoutubeSearch.Web.Certificate;
 
 namespace YoutubeSearch.Web
 {

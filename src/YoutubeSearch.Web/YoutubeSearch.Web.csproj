@@ -36,11 +36,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Certificate\SigningKey.pfx" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Update="app.db" CopyToOutputDirectory="PreserveNewest" ExcludeFromSingleFile="true" />
+    <None Update="SigningKey.pfx" CopyToOutputDirectory="PreserveNewest" ExcludeFromSingleFile="true" />
   </ItemGroup>
   <ItemGroup>
     <!-- Don't publish the SPA source files, but do show them in the project files list -->
